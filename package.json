@@ -1,0 +1,56 @@
+{
+    "name":  "@majico/skills",
+    "version":  "0.1.0",
+    "description":  "Cursor Agent Skills for Majico SDK and MCP — OAuth connect, branding sync, briefs, palette/logo picks, export.",
+    "repository":  {
+                       "type":  "git",
+                       "url":  "git+https://github.com/majico-xyz/majico-skills.git",
+                       "directory":  "packages/majico-skills"
+                   },
+    "homepage":  "https://github.com/majico-xyz/majico-skills#readme",
+    "bugs":  {
+                 "url":  "https://github.com/majico-xyz/majico.xyz/issues"
+             },
+    "publishConfig":  {
+                          "access":  "public"
+                      },
+    "type":  "module",
+    "bin":  {
+                "majico-skills":  "bin/majico-skills.mjs"
+            },
+    "files":  [
+                  "bin",
+                  "skills",
+                  "README.md"
+              ],
+    "scripts":  {
+                    "test":  "vitest run",
+                    "prepublishOnly":  "npm test"
+                },
+    "keywords":  [
+                     "majico",
+                     "cursor",
+                     "agent-skills",
+                     "mcp",
+                     "brand",
+                     "design-tokens"
+                 ],
+    "license":  "MIT",
+    "peerDependencies":  {
+                             "@majico/sdk":  "\u003e=1.0.0"
+                         },
+    "peerDependenciesMeta":  {
+                                 "@majico/sdk":  {
+                                                     "optional":  true
+                                                 }
+                             },
+    "devDependencies":  {
+                            "@majico/sdk":  "^1.0.1",
+                            "@types/node":  "^22.19.0",
+                            "typescript":  "^5.9.0",
+                            "vitest":  "^4.1.6"
+                        },
+    "engines":  {
+                    "node":  "\u003e=18"
+                }
+}
