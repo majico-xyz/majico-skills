@@ -23,8 +23,14 @@ Requires connected MCP — see **majico-mcp-connect**.
 
 1. Call **`list_logo_candidates`** with `projectId`.
 2. Present options and **`/mcp/preview/logo-picker`** link when provided.
-3. Wait for user choice.
-4. Call **`select_logo`** with `userConfirmed: true` (or `userDelegatedPick: true` only when user explicitly asked you to choose).
+3. Prefer the **inline PNG image blocks** from the tool result — do not rely on markdown-image URLs alone.
+4. Reject picker / preview links whose host is `0.0.0.0` or `::` (not browser-reachable); use the session public origin (`majico.d3bu7.com` / `majico.xyz`) instead.
+5. Wait for user choice.
+6. Call **`select_logo`** with `userConfirmed: true` (or `userDelegatedPick: true` only when user explicitly asked you to choose).
+
+### SVG model reminder
+
+New generated marks use **Quiver `arrow-1.1`** (`QUIVER_LOGO_MODEL`). Template IDs like `book-open` are valid candidates when selected (e.g. YieldScope open-book mark).
 
 ## Explicit delegation exception
 
