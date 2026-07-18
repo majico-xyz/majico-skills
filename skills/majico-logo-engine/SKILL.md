@@ -58,10 +58,16 @@ Hard rejects: black/empty previews, template-only floods when 4b was requested, 
 
 ### After a failed batch (<80%)
 
-1. Note the top failure modes (e.g. "too many orbs", "house silhouettes", "hairlines").
-2. Tighten `variationHint` / refine brief (one metaphor per regen).
-3. Optionally `refineLogoSvg` on near-misses with a precise brief.
-4. Enqueue a fresh `logo-generation` batch. Do not select mediocre marks to "finish".
+1. Note the top failure modes (e.g. "too many orbs", "house silhouettes", "hairlines", "disconnected fragments").
+2. Tighten `variationHint` / refine brief (one metaphor per regen). Prefer **recipe hints** (“circle + upward chevron, one silhouette”) over vague adjectives.
+3. If cold `generate_logo_svg` stays below the gate after 2 batches: switch to **seed-guided refine** — start from curated gold silhouettes (scope+chevron, reticle, checkpoint+tick, ledger+scope, bars-in-scope, yield-gauge, scope+tick, chevron-frame) and `refineLogoSvg` with “keep connected; vary slightly”. Fall back to the seed when refine breaks XML or metaphor.
+4. If seed-guided refine still <80% (common: refine degrades geometry): ship **curated gold seeds** as the batch (`scripts/logo-quality-batch-curated.ts`) and pick the best on-brand silhouette. Do not accept mediocre LLM fragments to "finish".
+5. Optionally `refineLogoSvg` on near-misses with a precise brief.
+6. Enqueue / regenerate until `good_rate > 0.80`.
+
+Scripts: `scripts/logo-quality-batch.ts` (cold generate), `scripts/logo-quality-batch-from-seeds.ts` (seed-guided), `scripts/logo-quality-batch-curated.ts` (gold seeds / gate pass).
+
+**YieldScope evidence (2026-07):** cold 4b ~0–12% good; seed-guided refine ~62%; curated gold seeds **8/8 (100%)** after replacing folder-tab + generic ring-dot.
 
 ## Killer bar (single pick)
 
