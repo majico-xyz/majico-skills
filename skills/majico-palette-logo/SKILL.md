@@ -30,7 +30,7 @@ Requires connected MCP — see **majico-mcp-connect**.
 
 ### SVG model reminder
 
-New generated marks use **Quiver `arrow-1.1`** (`QUIVER_LOGO_MODEL`). Template IDs like `book-open` are valid candidates when selected (e.g. YieldScope open-book mark).
+Preferred engine path: **`majico-logo-4b`** via `LOGO_LLM_MODEL` on Ollama (`generate_asset` → `logo-generation`). Quiver `arrow-1.1` is the cloud fallback when the engine logo route is unavailable. Template IDs like `book-open` are valid shortlist candidates when no generated batch exists.
 
 ## Explicit delegation exception
 
