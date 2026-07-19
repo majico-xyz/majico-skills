@@ -1,6 +1,6 @@
 ---
 name: majico-logo-engine
-description: Generate and iterate brand logos with majico-logo-4b on the engine Ollama host via Majico MCP (staging). Use when making logos, reseeding logo batches, judging logo candidates visually, or adapting logo skill prompts after bad batches. Includes skill-adapt → generate → judge loop until ≥80% decent.
+description: Generate and iterate brand logos with majico-logo-4b on the engine Ollama host via Majico MCP (staging). Use when making logos, reseeding logo batches, judging logo candidates visually, or adapting logo skill prompts after bad batches. Includes skill-adapt → generate → judge loop until ≥80% brand-usable.
 ---
 
 # Majico logo engine (`majico-logo-4b`)
@@ -10,42 +10,38 @@ Requires connected **staging** MCP (`user-majico-staging`) — ping first.
 ## Model truth
 
 - Preferred generator: **`majico-logo-4b`** on engine Ollama (`OPENAI_BASE_URL` → `192.168.10.40:11434`).
-- Bad logos are usually **bad skill/prompt input**, not a broken model. Adapt `generate-logo-svg` + RECIPE variation hints.
-- Target **decent** cohesive marks (readable silhouette) — not elite agency quality.
+- Bad logos are usually **bad skill/prompt input**, not a broken model.
+- Target **decent brand marks** (distinctive identity, memorable metaphor) — not elite agency work, **not UI icons / system glyphs**.
 - `quiver_generate_svg` ≠ 4b. Cleanup ≠ quality — always visual-judge.
 
 ## Prompt contract
 
 | Constraint | Rule |
 | --- | --- |
-| Metaphor lock | One idea before drawing; support shape must touch |
+| Metaphor lock | One brand idea; fused silhouette preferred over container+glyph |
 | viewBox | `0 0 48 48`, 80% safe zone |
-| Path budget | ≤8 drawables; prefer circle/rect primitives |
+| Path budget | ≤8 drawables |
 | Stroke | ~2.5–3.5; round caps/joins |
 | Color | `currentColor` only |
-| Cohesion | ONE connected silhouette; zero floating fragments |
-| Negatives | Fragment soup, letter-noise, stacked gaps, crypto orb/leaf/hex, letter-in-circle |
+| Cohesion | ONE connected silhouette |
+| Brand creativity | Asymmetry / negative-space interest OK; must work beside a wordmark |
+| Negatives | Fragments, letter-noise, crypto clichés, **UI icons** (check-in-circle, reticle, signal bars, upload arrow-in-circle, gauge widget, sparkline/chart polyline, window-layout squares, app-icon chrome) |
 
-External patterns folded in: **svg-authoring** (squint / path budget / optical balance), **svg-logo-generator** (metaphor → primitives), **svg-logo-designer** (one mark type).
+## Brand-usable bar (pass/fail)
+
+Pass if: cohesive silhouette, product metaphor with personality, would look odd as a Material/SF symbol, wordmark-companion ready.
+
+Fail if: fragments/letter-noise **or** reads as tab-bar / settings / dashboard chrome.
 
 ## Workflow
 
 1. `ping` + `projectId`.
-2. If reseeding: `submit_brief`.
-3. Generate via worker or `scripts/logo-skill-adapt-loop.ts` / `logo-quality-batch.ts` with updated disk prompts.
-4. `list_logo_candidates` — judge MCP PNG blocks. Never `![...](C:\path)`.
-5. If decent rate **< 80%**: tighten prompts/extras → regenerate. When user asks for a long loop: **≥10 iterations** before presenting.
-6. Present only when MCP gallery matches what you call decent. Sync local batches into `project_generated_logos` (reject old trash with `rejected_at`) before claiming a fix.
-7. Select only with `userConfirmed` / `userDelegatedPick`.
-
-## Decent bar
-
-Pass if: single intentional silhouette, ≤3 perceptual shapes, on-brand enough (scope/yield/checkpoint), not fragment/letter noise.
-
-Fail if: floating pieces, accidental letters, random sticks, stacked unrelated shapes.
-
-Do **not** call curated seed folders "100% good" while MCP still shows junk.
+2. Generate via adapt-loop scripts with updated disk prompts.
+3. Visually judge for **brand-usable** (not just non-fragmented).
+4. If brand-usable rate **< 80%**: tighten anti-UI-icon prompts → regenerate. Long loops: **≥10 iterations** before presenting.
+5. Sync into `project_generated_logos` so MCP picker matches what you call good.
+6. Select only with `userConfirmed` / `userDelegatedPick`.
 
 ## Related
 
-Harness: `logo-generation`. Prompt source: `brand-profile-craft` → `generate-logo-svg`.
+Harness: `logo-generation`. Prompt: `brand-profile-craft` → `generate-logo-svg`.
